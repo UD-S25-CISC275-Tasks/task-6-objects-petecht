@@ -57,7 +57,8 @@ export function isValid(question: Question, answer: string): boolean {
  * name "My First Question" would become "9: My First Q".
  */
 export function toShortForm(question: Question): string {
-    return "";
+    let joined: string = question.id + ": " + question.name.slice(0, 10);
+    return joined;
 }
 
 /**
@@ -86,6 +87,7 @@ export function toMarkdown(question: Question): string {
  * `newName`.
  */
 export function renameQuestion(question: Question, newName: string): Question {
+    question.name = newName;
     return question;
 }
 
@@ -95,6 +97,7 @@ export function renameQuestion(question: Question, newName: string): Question {
  * published; if it was published, now it should be not published.
  */
 export function publishQuestion(question: Question): Question {
+    question.published = !question.published;
     return question;
 }
 
@@ -105,7 +108,13 @@ export function publishQuestion(question: Question): Question {
  * The `published` field should be reset to false.
  */
 export function duplicateQuestion(id: number, oldQuestion: Question): Question {
-    return oldQuestion;
+    let oldName: string = oldQuestion.name;
+    let duplicateQuestion: Question = {
+        ...oldQuestion,
+        name: "Copy of " + oldName,
+        published: false,
+    };
+    return duplicateQuestion;
 }
 
 /**
